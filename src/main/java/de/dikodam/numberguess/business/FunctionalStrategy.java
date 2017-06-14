@@ -1,38 +1,37 @@
 package de.dikodam.numberguess.business;
 
-import java.util.Random;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public final class FunctionalStrategy implements IStrategy {
+public class FunctionalStrategy implements IStrategy {
 
     private String name;
     private int inclusiveLowerBound;
     private int exclusiveUpperBound;
+    private int lastGuess;
     private BiFunction<Integer, Integer, Integer> numberGenerator;
     private Function<Integer, Integer> tooLowProcessor;
     private Function<Integer, Integer> tooHighProcessor;
 
 
-    public static final BiFunction<Integer, Integer, Integer> defaultGenerator = (lowerBound, upperBound) ->
-        new Random().nextInt(upperBound) + lowerBound;
-
-    public static final Function<Integer, Integer> defaultBoundProcessor = Function.identity();
-
     public FunctionalStrategy(String name, int inclusiveLowerBound, int exclusiveUpperBound) {
-        this(name, inclusiveLowerBound, exclusiveUpperBound, defaultGenerator, defaultBoundProcessor,
-            defaultBoundProcessor);
+        this.name = name;
+        this.inclusiveLowerBound = inclusiveLowerBound;
+        this.exclusiveUpperBound = exclusiveUpperBound;
+        numberGenerator = FunctionalStrategies.randomNumberGenerator;
+        tooLowProcessor = FunctionalStrategies.voidBoundProcessor;
+        tooHighProcessor = FunctionalStrategies.voidBoundProcessor;
     }
 
     public FunctionalStrategy(String name, int inclusiveLowerBound, int exclusiveUpperBound, BiFunction<Integer,
-        Integer, Integer> numberGenerator, Function<Integer, Integer> tooLowProcessor, Function<Integer, Integer>
-                                  tooHighProcessor) {
+            Integer, Integer> numberGenerator, Function<Integer, Integer> tooLowProcessor, Function<Integer, Integer>
+                                      tooHighProcessor) {
         this.name = name;
         this.inclusiveLowerBound = inclusiveLowerBound;
         this.exclusiveUpperBound = exclusiveUpperBound;
         this.withNumberGenerator(numberGenerator)
-            .withTooLowProcessor(tooLowProcessor)
-            .withTooHighProcessor(tooHighProcessor);
+                .withTooLowProcessor(tooLowProcessor)
+                .withTooHighProcessor(tooHighProcessor);
     }
 
     public FunctionalStrategy withNumberGenerator(BiFunction<Integer, Integer, Integer> numberGenerator) {
@@ -63,7 +62,8 @@ public final class FunctionalStrategy implements IStrategy {
 
     @Override
     public final int guessNumber() {
-        return numberGenerator.apply(inclusiveLowerBound, exclusiveUpperBound);
+        lastGuess = numberGenerator.apply(inclusiveLowerBound, exclusiveUpperBound);
+        return lastGuess;
     }
 
     @Override
@@ -75,4 +75,6 @@ public final class FunctionalStrategy implements IStrategy {
     public final void guessedTooHigh() {
         exclusiveUpperBound = tooHighProcessor.apply(exclusiveUpperBound);
     }
+
 }
+
