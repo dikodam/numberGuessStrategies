@@ -17,9 +17,7 @@ public class Simulator {
         this.inclusiveLowerBound = inclusiveLowerBound;
         this.exclusiveUpperBound = exclusiveUpperBound;
         strategyWrappers = new ArrayList<>();
-        statLogger = StatLogger
-            .getInstance()
-            .reset();
+        statLogger = StatLogger.getInstance().reset();
         random = new Random();
 
         // add a default strategy
