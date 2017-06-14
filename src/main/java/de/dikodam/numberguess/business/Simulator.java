@@ -21,9 +21,9 @@ public class Simulator {
         random = new Random();
 
         // add a default strategy
-        this.addStrategy(new FunctionalStrategy("default", 0, 100));
-        // TODO add boundary correcting middle guessing strategy
-        // TODO add boundary correcting randomly guessing strategy
+        this.addStrategy(FunctionalStrategies.getDefaultNoobStrategy(inclusiveLowerBound, exclusiveUpperBound));
+        this.addStrategy(FunctionalStrategies.getRestrictingRandomStrategy(inclusiveLowerBound, exclusiveUpperBound));
+        this.addStrategy(FunctionalStrategies.getRestrictingTargettingStrategy(inclusiveLowerBound, exclusiveUpperBound));
     }
 
     public int getInclusiveLowerBound() {

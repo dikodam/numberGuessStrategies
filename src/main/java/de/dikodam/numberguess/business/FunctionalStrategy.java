@@ -23,9 +23,10 @@ public class FunctionalStrategy implements IStrategy {
         tooHighProcessor = FunctionalStrategies.voidBoundProcessor;
     }
 
-    public FunctionalStrategy(String name, int inclusiveLowerBound, int exclusiveUpperBound, BiFunction<Integer,
-            Integer, Integer> numberGenerator, Function<Integer, Integer> tooLowProcessor, Function<Integer, Integer>
-                                      tooHighProcessor) {
+    public FunctionalStrategy(String name, int inclusiveLowerBound, int exclusiveUpperBound,
+                              BiFunction<Integer, Integer, Integer> numberGenerator,
+                              Function<Integer, Integer> tooLowProcessor,
+                              Function<Integer, Integer> tooHighProcessor) {
         this.name = name;
         this.inclusiveLowerBound = inclusiveLowerBound;
         this.exclusiveUpperBound = exclusiveUpperBound;
