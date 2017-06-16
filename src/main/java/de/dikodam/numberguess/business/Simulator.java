@@ -21,8 +21,8 @@ public class Simulator {
         random = new Random();
 
         // add a default strategy
-        this.addStrategy(FunctionalStrategies.getDefaultNoobStrategy(inclusiveLowerBound, exclusiveUpperBound));
-        this.addStrategy(FunctionalStrategies.getRestrictingRandomStrategy(inclusiveLowerBound, exclusiveUpperBound));
+        // this.addStrategy(FunctionalStrategies.getDefaultNoobStrategy(inclusiveLowerBound, exclusiveUpperBound));
+        // this.addStrategy(FunctionalStrategies.getRestrictingRandomStrategy(inclusiveLowerBound, exclusiveUpperBound));
         this.addStrategy(FunctionalStrategies.getRestrictingTargettingStrategy(inclusiveLowerBound, exclusiveUpperBound));
     }
 

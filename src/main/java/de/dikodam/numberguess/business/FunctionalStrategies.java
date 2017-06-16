@@ -11,7 +11,7 @@ public class FunctionalStrategies {
     }
 
     public static final BiFunction<Integer, Integer, Integer> randomNumberGenerator = (lowerBound, upperBound) ->
-            new Random().nextInt(upperBound) + lowerBound;
+            new Random().nextInt(upperBound - lowerBound) + lowerBound;
 
     public static final Function<Integer, Integer> voidBoundProcessor = Function.identity();
 

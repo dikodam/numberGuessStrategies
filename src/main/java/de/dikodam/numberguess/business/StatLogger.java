@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 public class StatLogger {
 
     private static StatLogger instance;
+
     private Map<Integer, List<StrategyStatistic>> strategyStatistics;
     private int runCounter;
 
@@ -65,21 +66,20 @@ public class StatLogger {
 //        sb.append(String.format("LowerBound: %d", runCounter));
 //        sb.append(String.format("UpperBound: %d", runCounter));
 
-        Map<String, List<StrategyStatistic>> strategyStatisticsGroupedByNames = strategyStatistics.entrySet()
-            .stream()
-            .flatMap(entry -> entry.getValue().stream())
-            .collect(Collectors.groupingBy(StrategyStatistic::getName));
+        Map<String, List<StrategyStatistic>> strategyStatisticsGroupedByNames =
+            strategyStatistics.entrySet()
+                .stream()
+                .flatMap(entry -> entry.getValue().stream())
+                .collect(Collectors.groupingBy(StrategyStatistic::getName));
 
-        strategyStatisticsGroupedByNames
-            .forEach((strategyName, strategyStatistics) -> {
-                sb.append(String.format("Strategy: %s\n", strategyName));
-                OptionalDouble averageTries = strategyStatistics
-                    .stream()
-                    .mapToInt(StrategyStatistic::getTryCount)
-                    .average();
-                sb.append(String.format("avg. tries: %,.2f\n", averageTries.orElseThrow
-                    (IllegalArgumentException::new)));
-            });
+        for (Map.Entry<String, List<StrategyStatistic>> entry : strategyStatisticsGroupedByNames.entrySet()) {
+            sb.append(String.format("Strategy: %s\n", entry.getKey()));
+            OptionalDouble averageTries = entry.getValue()
+                .stream()
+                .mapToInt(StrategyStatistic::getTryCount)
+                .average();
+            sb.append(String.format("avg. tries: %,.2f\n", averageTries.orElse(-1)));
+        }
 
         // TODO compute (VAR or SD), maybe extrema
 

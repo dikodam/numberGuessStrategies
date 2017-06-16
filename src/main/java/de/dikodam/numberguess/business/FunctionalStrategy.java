@@ -69,12 +69,12 @@ public class FunctionalStrategy implements IStrategy {
 
     @Override
     public final void guessedTooLow() {
-        inclusiveLowerBound = tooLowProcessor.apply(inclusiveLowerBound);
+        inclusiveLowerBound = tooLowProcessor.apply(lastGuess);
     }
 
     @Override
     public final void guessedTooHigh() {
-        exclusiveUpperBound = tooHighProcessor.apply(exclusiveUpperBound);
+        exclusiveUpperBound = tooHighProcessor.apply(lastGuess);
     }
 
 }
